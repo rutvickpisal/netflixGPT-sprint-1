@@ -7,12 +7,10 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../utils/firebase";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
 const Login = () => {
-  const navigate = useNavigate();
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
   const name = useRef("");
@@ -26,7 +24,6 @@ const Login = () => {
     const message = checkValidData(email.current.value, password.current.value);
     setErrorMessage(message);
     if (message) return;
-
     // Sign In or Sign Up logic
     if (!isSignInForm) {
       // Sign up logic
@@ -38,7 +35,6 @@ const Login = () => {
         .then((userCredential) => {
           // Signed up
           const user = userCredential.user;
-          console.log("User created", user);
           updateProfile(user, {
             email: email.current.value,
             displayName: name.current.value,
@@ -54,17 +50,14 @@ const Login = () => {
                   photoURL,
                 })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               setErrorMessage(error);
             });
-          console.log("USER", user.displayName, user.email, user.photoURL);
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
-          console.log(errorCode + " - " + errorMessage);
           if (errorCode === "auth/email-already-in-use") {
             setErrorMessage("User Already in use");
           }
@@ -79,21 +72,11 @@ const Login = () => {
         .then((userCredential) => {
           // Signed in
           const user = userCredential.user;
-          // updateProfile(user, {
-          //   email: email.current.value,
-          //   displayName: name.current.value,
-          //   photoURL: "https://avatars.githubusercontent.com/u/48404451?v=4",
-          // }).catch((error) => {
-          //   setErrorMessage(error);
-          // });
-          console.log("USER", user.email, user.photoURL);
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;
           const errorMessage = error.message;
           setErrorMessage(errorCode);
-          console.log("Sign in Error ", errorCode - errorMessage);
         });
     }
   };
@@ -101,6 +84,7 @@ const Login = () => {
     setIsSignInForm(!isSignInForm);
   };
   return (
+
     <>
       <div>
         <Header />
