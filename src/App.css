@@ -1,0 +1,14 @@
+.hide-scrollbar {
+    /* Hide scrollbar for Firefox */
+    scrollbar-width: thin;
+    scrollbar-color: transparent transparent;
+  
+    /* Hide scrollbar for Webkit browsers */
+    ::webkit-scrollbar {
+      width: 6px;
+    }
+  
+    ::webkit-scrollbar-thumb {
+      background-color: transparent;
+    }
+  }
