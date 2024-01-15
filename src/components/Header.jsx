@@ -2,13 +2,15 @@ import React, { useEffect } from "react";
 import { auth } from "../utils/firebase";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
+import { toggleGptSearch } from "../utils/gptSlice";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const user = auth.currentUser
+
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -19,6 +21,11 @@ const Header = () => {
         navigate("/error");
       });
   };
+
+  const handleGptSearch = () => {
+    dispatch(toggleGptSearch())
+  }
+  const isGPTActive = useSelector(store => store.gptSearch.isGptSearchActive)
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       if (user) {
@@ -42,6 +49,7 @@ const Header = () => {
         alt="Logo"
       ></img>
       {user && <div className="flex p-2 items-center">
+        <button className="px-4 py-2 bg-blue-900 text-white rounded-md font-semibold mx-4 hover:bg-blue-700" onClick={handleGptSearch}>{!isGPTActive ? "GptSearch": "HomePage"}</button>
         <img alt={user?.email} src={user.photoURL} className="w-14 h-12 rounded-sm"></img>
         <button
           className="font-bold text-white p-2"

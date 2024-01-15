@@ -1,3 +1,67 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* MovieList.css */
+
+/* MovieList.css */
+body {
+  overflow-x: hidden;
+}
+body {
+  overflow-y: scroll; /* Enable vertical scrolling */
+}
+
+/* Optionally, you can hide the scrollbar for Webkit browsers (Chrome, Safari) */
+body::-webkit-scrollbar {
+  width: 0.5rem; /* Adjust as needed */
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+.movie-list-container {
+  /* Set a fixed height for the container to enable scrolling */
+  max-height: 300px; /* Adjust the height as needed */
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.movie-list {
+  display: flex;
+  gap: 16px; /* Adjust the gap between movie items as needed */
+  /* Ensure the content can be scrolled horizontally */
+  white-space: nowrap;
+  /* Optionally, you can add more styling to the movie items */
+}
+
+/* Hide the scrollbar for Webkit browsers (Chrome, Safari) */
+.movie-list-container::-webkit-scrollbar {
+  width: 2px;
+}
+
+.movie-list-container::-webkit-scrollbar-thumb {
+  background-color: transparent;
+}
+
+.movie-container {
+  position: relative;
+  width: 200px; /* Adjust the width as needed */
+  height: 300px; /* Adjust the height as needed */
+  overflow: hidden;
+}
+
+.movie-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensure the image covers the container */
+  transition: transform 0.3s ease; /* Add a smooth transition on hover */
+
+  /* Apply a shadow or border to enhance the visual effect */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Add the hover effect to scale the image */
+.movie-container:hover .movie-image {
+  transform: scale(1.05); /* Adjust the scale factor as needed */
+}
